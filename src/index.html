@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+
+<form class="form" data-form="form" novalidate>
+  <div>
+    <label class="label" for="checkbox">Туда и обратно</label>
+    <input id="checkbox" type="checkbox" class="checkbox"></input>
+  </div>
+  <div class="inputHolder">
+    <div class="form-control to">
+      <label class="label" for="toThere">Туда</label>
+      <input id="toThere" class="input" type="text" data-input="toThere" autocomplete="off" required>
+    </div>
+    <div class="form-control back">
+      <label class="label" for="toBack">Обратно</label>
+      <input id="toBack" class="input" type="text" data-input="toBack" autocomplete="off" required>
+    </div>
+</form>
+
+<div class="holder" id="holder">
+  <table class="menu" id="menu">
+    <tr><td id="back">‹</td><td colspan="5" id="date"></td><td id="next">›</td></tr>
+  </table>
+  <table class="calendar" id="calendar"></table>
+</div>
+
+
+
+<!-- <script type="text/javascript" src="./js/moment.js"></script> -->
+</body>
+</html>

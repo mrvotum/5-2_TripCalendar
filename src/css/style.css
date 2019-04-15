@@ -1,0 +1,73 @@
+.form{
+  border: 1px solid #000;
+  width: 350px;
+  margin: auto;
+  margin-top: 50px;
+  padding: 20px;
+}
+
+.form-control{
+  margin-top: 10px;
+}
+
+
+.inputHolder{
+  display: flex;
+}
+
+.back{
+  display: none;
+}
+
+.menu{
+  width: 179px;
+}
+.menu:nth-child(1){
+  text-align: center;
+}
+
+.holder{
+  position: absolute;
+  left: -100%;
+  background-color: #fff;
+}
+.calendar {
+  font-size: 15px;
+  text-align: center;
+  background-color: #fff;
+  position: absolute;
+}
+/* .calendar thead tr:last-child {
+  color: rgb(85, 85, 85);
+} */
+/* .calendar thead tr:nth-child(1) td:nth-child(2) {
+  color: rgb(225, 0, 255);
+} */
+.calendar thead tr:nth-child(1) td:nth-child(1):hover,
+.calendar thead tr:nth-child(1) td:nth-child(3):hover {
+  cursor: pointer;
+}
+td {
+  /* color: rgb(44, 86, 122); */
+  padding: 4px;
+}
+td:nth-child(n+6) {
+  color: rgb(102, 0, 0);
+}
+.noActive{
+  color: rgb(167, 167, 167)!important;
+}
+.today {
+  border: 1px solid rgb(220, 0, 0);
+  border-radius: 50%;
+}
+.checkedDayThere,
+.checkedDayBack{
+  background-color: rgb(220, 0, 0);
+  border-radius: 50%;
+  color: #fff!important;
+}
+
+#calendarToBack{
+  display: none;
+}
