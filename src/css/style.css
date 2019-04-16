@@ -71,3 +71,8 @@ td:nth-child(n+6) {
 #calendarToBack{
   display: none;
 }
+
+.main {
+  width: 100vw;
+  height: 100vh;
+}

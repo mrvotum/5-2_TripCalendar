@@ -10,7 +10,7 @@ const monthArr = [
   'Сентябрь',
   'Октябрь',
   'Ноябрь',
-  'Декабрь'
+  'Декабрь',
 ];
 
 export default function splitString(stringToSplit) {

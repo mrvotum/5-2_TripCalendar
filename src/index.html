@@ -8,21 +8,23 @@
 </head>
 <body>
 
-<form class="form" data-form="form" novalidate>
-  <div>
-    <label class="label" for="checkbox">Туда и обратно</label>
-    <input id="checkbox" type="checkbox" class="checkbox"></input>
-  </div>
-  <div class="inputHolder">
-    <div class="form-control to">
-      <label class="label" for="toThere">Туда</label>
-      <input id="toThere" class="input" type="text" data-input="toThere" autocomplete="off" required>
+<div data-id="main" class="main">
+  <form class="form" data-form="form" novalidate>
+    <div>
+      <label class="label" for="checkbox">Туда и обратно</label>
+      <input id="checkbox" type="checkbox" class="checkbox"></input>
     </div>
-    <div class="form-control back">
-      <label class="label" for="toBack">Обратно</label>
-      <input id="toBack" class="input" type="text" data-input="toBack" autocomplete="off" required>
-    </div>
-</form>
+    <div class="inputHolder">
+      <div class="form-control to">
+        <label class="label" for="toThere">Туда</label>
+        <input id="toThere" class="input" type="text" data-input="toThere" autocomplete="off" required>
+      </div>
+      <div class="form-control back">
+        <label class="label" for="toBack">Обратно</label>
+        <input id="toBack" class="input" type="text" data-input="toBack" autocomplete="off" required>
+      </div>
+  </form>
+</div>
 
 <div class="holder" id="holder">
   <table class="menu" id="menu">
