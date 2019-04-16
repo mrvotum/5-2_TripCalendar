@@ -57,9 +57,12 @@ let year = dateNow.getFullYear();
 let month = dateNow.getMonth() + 1;
 
 toThere.addEventListener('focus', () => {
+  if (holder.style.top !== '-100%') {
+    createCalendar(year, month);
+  }
+
   holder.style.top = `${toThere.offsetTop + toThere.offsetHeight}px`;
   holder.style.left = `${toThere.offsetLeft - ((holder.clientWidth - toThere.offsetWidth) / 2)}px`;
-  createCalendar(year, month);
 
   btn = 'there';
 });
@@ -68,11 +71,13 @@ toBack.addEventListener('focus', () => {
   const date = document.querySelector('#date');
   const dataArr = splitString(String(date.textContent));
 
+  if (holder.style.top !== '-100%') {
+    toThereChecked = [Number(toThereChecked), dataArr[0] - 1, dataArr[1], 'back'];
+    createCalendar(dataArr[1], dataArr[0], toThereChecked); // передаём выбранную дату
+  }
+
   holder.style.top = `${toBack.offsetTop + toBack.offsetHeight}px`;
   holder.style.left = `${toBack.offsetLeft - ((holder.clientWidth - toBack.offsetWidth) / 2)}px`;
-
-  toThereChecked = [Number(toThereChecked), dataArr[0] - 1, dataArr[1], 'back'];
-  createCalendar(dataArr[1], dataArr[0], toThereChecked); // передаём выбранную дату
 
   btn = 'back';
 });
@@ -121,8 +126,38 @@ document.querySelector('#next').onclick = function moveNext() {
   }
 };
 
+const form = document.querySelector('[data-form=form]');
+// убираем всплытие для формы
+form.addEventListener('click', (event) => {
+  // eslint-disable-next-line no-param-reassign
+  event = event || window.event; // кросс-браузерно
+  if (event.stopPropagation) {
+  // Вариант стандарта W3C:
+    event.stopPropagation();
+  } else {
+  // Вариант Internet Explorer:
+  // eslint-disable-next-line no-param-reassign
+    event.cancelBubble = true;
+  }
+});
+
+// убираем всплытие для календаря
+holder.addEventListener('click', (event) => {
+  // eslint-disable-next-line no-param-reassign
+  event = event || window.event; // кросс-браузерно
+  if (event.stopPropagation) {
+  // Вариант стандарта W3C:
+    event.stopPropagation();
+  } else {
+  // Вариант Internet Explorer:
+  // eslint-disable-next-line no-param-reassign
+    event.cancelBubble = true;
+  }
+});
+
 const main = document.querySelector('[data-id=main]');
-main.addEventListener('click', (ev) => {
-  console.log(ev);
-  holder.style.display = 'none';
+// скрыываем календарь
+main.addEventListener('click', () => {
+  holder.style.top = `${-100}%`;
+  holder.style.left = `${-100}%`;
 });
