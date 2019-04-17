@@ -10,7 +10,6 @@
   margin-top: 10px;
 }
 
-
 .inputHolder{
   display: flex;
 }
@@ -57,9 +56,16 @@ td:nth-child(n+6) {
 .noActive{
   color: rgb(167, 167, 167)!important;
 }
+.noActive{
+  cursor: not-allowed;;
+}
+.active:hover{
+  cursor: pointer;
+}
 .today {
   border: 1px solid rgb(220, 0, 0);
   border-radius: 50%;
+  box-sizing: border-box;
 }
 .checkedDayThere,
 .checkedDayBack{
@@ -75,4 +81,9 @@ td:nth-child(n+6) {
 .main {
   width: 100vw;
   height: 100vh;
+}
+
+#back:hover,
+#next:hover {
+  cursor: pointer;
 }
