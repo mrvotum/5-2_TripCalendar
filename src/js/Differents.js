@@ -12,7 +12,6 @@ export default class Differents {
   create() {
     // тот же день
     if (this.diffDay === 0 && this.diffMonth === 0 && this.diffYear === 0) {
-      // console.log(`the same day     ${this.diffDay}   ${this.diffMonth}   ${this.diffYear}`);
       return 0;
     } else if (this.diffDay < 0 && this.diffMonth === 0 && this.diffYear === 0 || this.diffMonth < 0
       && this.diffYear === 0 || this.diffYear < 0) {

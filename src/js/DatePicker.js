@@ -107,19 +107,8 @@ export default class DatePicker {
         this.month = 12;
         this.year -= 1;
       }
-      if (this.toThere.value !== '' && this.control === 0) {
-        const date = document.querySelector('[data-id=date]');
-        const dataArr = new CreateCalendar().splitString(String(date.textContent));
 
-        this.control = [Number(this.toThereChecked), dataArr[0] - 1, dataArr[1], this.btn];
-        // передаём выбранную дату
-        new CreateCalendar().createCalendarPage(this.year, this.month, this.control, this.btn);
-      } else if (this.toThere.value !== '' && this.control !== 0) {
-        // передаём выбранную дату
-        new CreateCalendar().createCalendarPage(this.year, this.month, this.control, this.btn);
-      } else {
-        new CreateCalendar().createCalendarPage(this.year, this.month, 'button', this.btn);
-      }
+      new CreateCalendar().createCalendarPage(this.year, this.month, 'button', this.btn);
     });
 
     // переключатель плюс месяц
@@ -131,20 +120,7 @@ export default class DatePicker {
         this.year += 1;
       }
 
-      if (toThere.value !== '' && this.control === 0) {
-        const date = document.querySelector('[data-id=date]');
-        const dataArr = new CreateCalendar().splitString(String(date.textContent));
-
-        // eslint-disable-next-line max-len
-        this.control = [Number(this.toThereChecked), dataArr[0] - 1, dataArr[1], this.btn, this.btn];
-        // передаём выбранную дату
-        new CreateCalendar().createCalendarPage(this.year, this.month, this.control, this.btn);
-      } else if (this.toThere.value !== '' && this.control !== 0) {
-        // передаём выбранную дату
-        new CreateCalendar().createCalendarPage(this.year, this.month, this.control, this.btn);
-      } else {
-        new CreateCalendar().createCalendarPage(this.year, this.month, 'button', this.btn);
-      }
+      new CreateCalendar().createCalendarPage(this.year, this.month, 'button', this.btn);
     });
   }
 

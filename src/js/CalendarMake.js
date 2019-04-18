@@ -52,94 +52,66 @@ export default class CreateCalendar {
   }
 
   createCalendarPage(year, month, btn, back) {
-    if (back === 'back') {
-      this.createBack(year, month, btn);
-    } else {
-      this.createThere(year, month, btn);
-    }
-  }
-
-  createThere(year, month, btn) {
     const elem = document.querySelector('[data-id=calendar]');
     const date = document.querySelector('[data-id=date]');
 
     const mon = month - 1; // месяцы от 0 до 11
     const d = new Date(year, mon);
 
-    let table = `<table><tr><th>пн</th><th>вт</th><th>ср</th><th>чт</th>
+    this.table = `<table><tr><th>пн</th><th>вт</th><th>ср</th><th>чт</th>
     <th>пт</th><th>сб</th><th>вс</th></tr><tr>`;
 
     // заполнить первый ряд от понедельника
     // и до дня, с которого начинается месяц
     // * * * | 1  2  3  4
     for (let i = 0; i < this.getDay(d); i += 1) {
-      table += '<td></td>';
+      this.table += '<td></td>';
     }
 
     // ячейки календаря с датами
-    while (d.getMonth() === mon) {
-      const dArr = [d.getDate(), d.getMonth(), d.getFullYear()]; // открытая страница календаря
-
-      if (d.getDate() === this.dateNow.getDate() && !btn) { // сегодня
-        table += `<td class="today"> ${d.getDate()} </td>`;
-      } else if (d.getDate() < this.dateNow.getDate() && !btn || btn === 'button' && d < this.dateNow) { // недоступно
-        table += `<td class="noActive"> ${d.getDate()} </td>`;
-      } else if (d.getDate() > this.dateNow.getDate() && !btn || btn === 'button' && d > this.dateNow) { // когда доступно
-        table += `<td class="active">  ${d.getDate()} </td>`;
-      } else if (btn && new Differents(dArr, btn).create() === 0) { // выбранный день
-        // (отсюда начинается при выборе во втором календаре)
-        table += `<td class="checkedDayThere"> ${d.getDate()} </td>`;
-      } else if (btn && new Differents(dArr, btn).create() < 0 && d < this.dateNow) { // недоступно
-        table += `<td class="noActive"> ${d.getDate()} </td>`;
-      } else if (btn && new Differents(dArr, btn).create() > 0) { // когда доступно
-        table += `<td class="active"> ${d.getDate()} </td>`;
-      } else {
-        table += `<td class="noActive"> ${d.getDate()} </td>`;
-      }
-      // btn --- это дата, которую выбрали на календаре для поездки
-
-      if (this.getDay(d) % 7 === 6) { // вс, последний день - перевод строки
-        table += '</tr><tr>';
-      }
-      // console.log(dArr);
-      // console.log(btn);
-      d.setDate(d.getDate() + 1);
+    if (back === 'back') {
+      this.createBack(btn, mon, d);
+    } else {
+      this.createThere(btn, mon, d);
     }
 
     // добить таблицу пустыми ячейками, если нужно
     if (this.getDay(d) !== 0) {
       for (let i = this.getDay(d); i < 7; i += 1) {
-        table += '<td></td>';
+        this.table += '<td></td>';
       }
     }
 
     // закрыть таблицу
-    table += '</tr></table>';
+    this.table += '</tr></table>';
 
     // только одно присваивание innerHTML
-    elem.innerHTML = table;
+    elem.innerHTML = this.table;
 
     // записываем текущую дату в шапку
     date.innerHTML = `${this.monthArr[month - 1]} ${year}`;
   }
 
-  createBack(year, month) {
-    const elem = document.querySelector('[data-id=calendar]');
-    const date = document.querySelector('[data-id=date]');
+  createThere(btn, mon, d) {
+    // ячейки календаря с датами
+    while (d.getMonth() === mon) {
+      if (d.getDate() === this.dateNow.getDate() && !btn) { // сегодня
+        this.table += `<td class="today"> ${d.getDate()} </td>`;
+      } else if (d.getDate() < this.dateNow.getDate() && !btn || btn === 'button' && d < this.dateNow) { // недоступно
+        this.table += `<td class="noActive"> ${d.getDate()} </td>`;
+      } else if (d.getDate() > this.dateNow.getDate() && !btn || btn === 'button' && d > this.dateNow) { // когда доступно
+        this.table += `<td class="active">  ${d.getDate()} </td>`;
+      }
+      // btn --- это дата, которую выбрали на календаре для поездки
 
-    const mon = month - 1; // месяцы от 0 до 11
-    const d = new Date(year, mon);
-
-    let table = `<table><tr><th>пн</th><th>вт</th><th>ср</th><th>чт</th>
-    <th>пт</th><th>сб</th><th>вс</th></tr><tr>`;
-
-    // заполнить первый ряд от понедельника
-    // и до дня, с которого начинается месяц
-    // * * * | 1  2  3  4
-    for (let i = 0; i < this.getDay(d); i += 1) {
-      table += '<td></td>';
+      if (this.getDay(d) % 7 === 6) { // вс, последний день - перевод строки
+        this.table += '</tr><tr>';
+      }
+      d.setDate(d.getDate() + 1);
     }
+  }
 
+  createBack(btn, mon, d) {
     // ячейки календаря с датами
     while (d.getMonth() === mon) {
       this.thereDate = document.querySelector('[data-input=toThere]');
@@ -148,35 +120,19 @@ export default class CreateCalendar {
       const daysArr = [d.getDate(), d.getMonth(), d.getFullYear()]; // открытая страница календаря
 
       if (new Differents(daysArr, dArr).create() === 0) { // выбранный день
-        table += `<td class="checkedDayThere"> ${d.getDate()} </td>`;
+        this.table += `<td class="checkedDayThere"> ${d.getDate()} </td>`;
       } else if (new Differents(daysArr, dArr).create() < 0 && d < this.dateNow) { // недоступно
-        table += `<td class="noActive"> ${d.getDate()} </td>`;
+        this.table += `<td class="noActive"> ${d.getDate()} </td>`;
       } else if (new Differents(daysArr, dArr).create() > 0) { // когда доступно
-        table += `<td class="active"> ${d.getDate()} </td>`;
+        this.table += `<td class="active"> ${d.getDate()} </td>`;
       } else {
-        table += `<td class="noActive"> ${d.getDate()} </td>`;
+        this.table += `<td class="noActive"> ${d.getDate()} </td>`;
       }
 
       if (this.getDay(d) % 7 === 6) { // вс, последний день - перевод строки
-        table += '</tr><tr>';
+        this.table += '</tr><tr>';
       }
       d.setDate(d.getDate() + 1);
     }
-
-    // добить таблицу пустыми ячейками, если нужно
-    if (this.getDay(d) !== 0) {
-      for (let i = this.getDay(d); i < 7; i += 1) {
-        table += '<td></td>';
-      }
-    }
-
-    // закрыть таблицу
-    table += '</tr></table>';
-
-    // только одно присваивание innerHTML
-    elem.innerHTML = table;
-
-    // записываем текущую дату в шапку
-    date.innerHTML = `${this.monthArr[month - 1]} ${year}`;
   }
 }
