@@ -1,17 +1,17 @@
-import CreateCalendar from './class_calendarMake';
+import CreateCalendar from './CalendarMake';
 
 /* eslint-disable no-mixed-operators */
 export default class DatePicker {
   constructor() {
     this.toThere = document.querySelector('[data-input=toThere]');
     this.toBack = document.querySelector('[data-input=toBack]');
-    this.checkbox = document.querySelector('#checkbox');
-    this.calendar = document.querySelector('#calendar');
-    this.holder = document.querySelector('#holder');
+    this.checkbox = document.querySelector('[data-id=checkbox]');
+    this.calendar = document.querySelector('[data-id=calendar]');
+    this.holder = document.querySelector('[data-id=holder]');
 
     this.toThereChecked = 0;
     this.control = 0;
-    this.btn = 'no';
+    this.btn = null;
 
     this.dateNow = new Date();
     this.year = this.dateNow.getFullYear();
@@ -41,7 +41,7 @@ export default class DatePicker {
     this.calendar.addEventListener('click', (event) => {
       if (event.toElement.tagName === 'TD' && event.toElement.className === 'active' || event.toElement.tagName === 'TD' && event.toElement.className === 'today') {
         try {
-          const dayToThere = calendar.getElementsByClassName('checkedDayThere');
+          const dayToThere = this.calendar.getElementsByClassName('checkedDayThere');
           if (dayToThere[0].className === 'today checkedDayThere') {
             dayToThere[0].className = 'today';
           } else {
@@ -55,7 +55,7 @@ export default class DatePicker {
         // eslint-disable-next-line no-param-reassign
         event.toElement.className = `${checkedDay} checkedDayThere`;
 
-        const date = document.querySelector('#date');
+        const date = document.querySelector('[data-id=date]');
         const dataArr = new CreateCalendar().splitString(String(date.textContent));
 
         if (this.btn === 'there') {
@@ -70,35 +70,37 @@ export default class DatePicker {
 
   addListenersFocus() {
     this.toThere.addEventListener('focus', () => {
+      this.btn = 'there';
+
       if (this.holder.style.top !== '-100%') {
         new CreateCalendar().createCalendarPage(this.year, this.month);
       }
 
       this.holder.style.top = `${this.toThere.offsetTop + this.toThere.offsetHeight}px`;
       this.holder.style.left = `${this.toThere.offsetLeft - ((this.holder.clientWidth - this.toThere.offsetWidth) / 2)}px`;
-
-      this.btn = 'there';
     });
 
     this.toBack.addEventListener('focus', () => {
-      const date = document.querySelector('#date');
+      const date = document.querySelector('[data-id=date]');
       const dataArr = new CreateCalendar().splitString(String(date.textContent));
 
       if (this.holder.style.top !== '-100%') {
+        this.btn = 'back';
+
         this.toThereChecked = [Number(this.toThereChecked), dataArr[0] - 1, dataArr[1], 'back'];
         // передаём выбранную дату
-        new CreateCalendar().createCalendarPage(dataArr[1], dataArr[0], this.toThereChecked);
+        // eslint-disable-next-line max-len
+        new CreateCalendar().createCalendarPage(dataArr[1], dataArr[0], this.toThereChecked, this.btn);
       }
 
       this.holder.style.top = `${this.toBack.offsetTop + this.toBack.offsetHeight}px`;
       this.holder.style.left = `${this.toBack.offsetLeft - ((this.holder.clientWidth - this.toBack.offsetWidth) / 2)}px`;
-      this.btn = 'back';
     });
   }
 
   addListenersButtons() {
     // переключатель минус месяц
-    document.querySelector('#back').addEventListener('click', () => {
+    document.querySelector('[data-id=back]').addEventListener('click', () => {
       if (this.month > 1) {
         this.month -= 1;
       } else {
@@ -106,22 +108,22 @@ export default class DatePicker {
         this.year -= 1;
       }
       if (this.toThere.value !== '' && this.control === 0) {
-        const date = document.querySelector('#date');
+        const date = document.querySelector('[data-id=date]');
         const dataArr = new CreateCalendar().splitString(String(date.textContent));
 
         this.control = [Number(this.toThereChecked), dataArr[0] - 1, dataArr[1], this.btn];
         // передаём выбранную дату
-        new CreateCalendar().createCalendarPage(this.year, this.month, this.control);
+        new CreateCalendar().createCalendarPage(this.year, this.month, this.control, this.btn);
       } else if (this.toThere.value !== '' && this.control !== 0) {
         // передаём выбранную дату
-        new CreateCalendar().createCalendarPage(this.year, this.month, this.control);
+        new CreateCalendar().createCalendarPage(this.year, this.month, this.control, this.btn);
       } else {
-        new CreateCalendar().createCalendarPage(this.year, this.month, 'button');
+        new CreateCalendar().createCalendarPage(this.year, this.month, 'button', this.btn);
       }
     });
 
     // переключатель плюс месяц
-    document.querySelector('#next').addEventListener('click', () => {
+    document.querySelector('[data-id=next]').addEventListener('click', () => {
       if (this.month < 12) {
         this.month += 1;
       } else {
@@ -130,17 +132,18 @@ export default class DatePicker {
       }
 
       if (toThere.value !== '' && this.control === 0) {
-        const date = document.querySelector('#date');
+        const date = document.querySelector('[data-id=date]');
         const dataArr = new CreateCalendar().splitString(String(date.textContent));
 
-        this.control = [Number(this.toThereChecked), dataArr[0] - 1, dataArr[1], this.btn];
+        // eslint-disable-next-line max-len
+        this.control = [Number(this.toThereChecked), dataArr[0] - 1, dataArr[1], this.btn, this.btn];
         // передаём выбранную дату
-        new CreateCalendar().createCalendarPage(this.year, this.month, this.control);
+        new CreateCalendar().createCalendarPage(this.year, this.month, this.control, this.btn);
       } else if (this.toThere.value !== '' && this.control !== 0) {
         // передаём выбранную дату
-        new CreateCalendar().createCalendarPage(this.year, this.month, this.control);
+        new CreateCalendar().createCalendarPage(this.year, this.month, this.control, this.btn);
       } else {
-        new CreateCalendar().createCalendarPage(this.year, this.month, 'button');
+        new CreateCalendar().createCalendarPage(this.year, this.month, 'button', this.btn);
       }
     });
   }

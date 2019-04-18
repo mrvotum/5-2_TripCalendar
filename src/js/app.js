@@ -1,4 +1,4 @@
-import DatePicker from './class_datePicker';
+import DatePicker from './DatePicker';
 
 const widget = new DatePicker();
 widget.create();

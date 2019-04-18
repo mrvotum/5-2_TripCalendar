@@ -1,4 +1,4 @@
-import CreateCalendar from '../src/js/class_calendarMake';
+import CreateCalendar from '../src/js/CalendarMake';
 
 test('CreateCalendar creating', () => {
   const inputCreateCalendar = new CreateCalendar();

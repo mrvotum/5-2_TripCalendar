@@ -12,25 +12,25 @@
   <form class="form" data-form="form" novalidate>
     <div>
       <label class="label" for="checkbox">Туда и обратно</label>
-      <input id="checkbox" type="checkbox" class="checkbox"></input>
+      <input data-id="checkbox" id="checkbox" type="checkbox" class="checkbox"></input>
     </div>
     <div class="inputHolder">
-      <div class="form-control to">
+      <div class="formControl to">
         <label class="label" for="toThere">Туда</label>
         <input id="toThere" class="input" type="text" data-input="toThere" autocomplete="off" required>
       </div>
-      <div class="form-control back">
+      <div class="formControl back">
         <label class="label" for="toBack">Обратно</label>
         <input id="toBack" class="input" type="text" data-input="toBack" autocomplete="off" required>
       </div>
   </form>
 </div>
 
-<div class="holder" id="holder">
+<div class="holder" data-id="holder">
   <table class="menu" id="menu">
-    <tr><td id="back">‹</td><td colspan="5" id="date"></td><td id="next">›</td></tr>
+    <tr><td data-id="back" id="back">‹</td><td colspan="5" data-id="date"></td><td data-id="next" id="next">›</td></tr>
   </table>
-  <table class="calendar" id="calendar"></table>
+  <table class="calendar" data-id="calendar"></table>
 </div>
 
 

@@ -1,4 +1,4 @@
-import DatePicker from '../src/js/class_datePicker';
+import DatePicker from '../src/js/DatePicker';
 
 test('DatePicker creating', () => {
   const inputDatePicker = new DatePicker();
@@ -13,7 +13,7 @@ test('DatePicker creating', () => {
 
     toThereChecked: 0,
     control: 0,
-    btn: 'no',
+    btn: null,
 
     dateNow: today,
     year: today.getFullYear(),

@@ -1,5 +1,5 @@
 /* eslint-disable no-mixed-operators */
-import Differents from './class_differents';
+import Differents from './Differents';
 
 export default class CreateCalendar {
   constructor() {
@@ -43,9 +43,25 @@ export default class CreateCalendar {
     return arrayOfStrings;
   }
 
-  createCalendarPage(year, month, btn) {
-    const elem = document.getElementById('calendar');
-    const date = document.getElementById('date');
+  splitStringPoint(stringToSplit) {
+    const arrayOfStrings = stringToSplit.split('.');
+    arrayOfStrings[0] = Number(arrayOfStrings[0]);
+    arrayOfStrings[1] = Number(arrayOfStrings[1] - 1);
+    arrayOfStrings[2] = Number(arrayOfStrings[2]);
+    return arrayOfStrings;
+  }
+
+  createCalendarPage(year, month, btn, back) {
+    if (back === 'back') {
+      this.createBack(year, month, btn);
+    } else {
+      this.createThere(year, month, btn);
+    }
+  }
+
+  createThere(year, month, btn) {
+    const elem = document.querySelector('[data-id=calendar]');
+    const date = document.querySelector('[data-id=date]');
 
     const mon = month - 1; // месяцы от 0 до 11
     const d = new Date(year, mon);
@@ -87,6 +103,63 @@ export default class CreateCalendar {
       }
       // console.log(dArr);
       // console.log(btn);
+      d.setDate(d.getDate() + 1);
+    }
+
+    // добить таблицу пустыми ячейками, если нужно
+    if (this.getDay(d) !== 0) {
+      for (let i = this.getDay(d); i < 7; i += 1) {
+        table += '<td></td>';
+      }
+    }
+
+    // закрыть таблицу
+    table += '</tr></table>';
+
+    // только одно присваивание innerHTML
+    elem.innerHTML = table;
+
+    // записываем текущую дату в шапку
+    date.innerHTML = `${this.monthArr[month - 1]} ${year}`;
+  }
+
+  createBack(year, month) {
+    const elem = document.querySelector('[data-id=calendar]');
+    const date = document.querySelector('[data-id=date]');
+
+    const mon = month - 1; // месяцы от 0 до 11
+    const d = new Date(year, mon);
+
+    let table = `<table><tr><th>пн</th><th>вт</th><th>ср</th><th>чт</th>
+    <th>пт</th><th>сб</th><th>вс</th></tr><tr>`;
+
+    // заполнить первый ряд от понедельника
+    // и до дня, с которого начинается месяц
+    // * * * | 1  2  3  4
+    for (let i = 0; i < this.getDay(d); i += 1) {
+      table += '<td></td>';
+    }
+
+    // ячейки календаря с датами
+    while (d.getMonth() === mon) {
+      this.thereDate = document.querySelector('[data-input=toThere]');
+      // дата поездки туда
+      const dArr = new CreateCalendar().splitStringPoint(String(this.thereDate.value));
+      const daysArr = [d.getDate(), d.getMonth(), d.getFullYear()]; // открытая страница календаря
+
+      if (new Differents(daysArr, dArr).create() === 0) { // выбранный день
+        table += `<td class="checkedDayThere"> ${d.getDate()} </td>`;
+      } else if (new Differents(daysArr, dArr).create() < 0 && d < this.dateNow) { // недоступно
+        table += `<td class="noActive"> ${d.getDate()} </td>`;
+      } else if (new Differents(daysArr, dArr).create() > 0) { // когда доступно
+        table += `<td class="active"> ${d.getDate()} </td>`;
+      } else {
+        table += `<td class="noActive"> ${d.getDate()} </td>`;
+      }
+
+      if (this.getDay(d) % 7 === 6) { // вс, последний день - перевод строки
+        table += '</tr><tr>';
+      }
       d.setDate(d.getDate() + 1);
     }
 
