@@ -81,18 +81,25 @@ export default class DatePicker {
     });
 
     this.toBack.addEventListener('focus', () => {
-      const date = document.querySelector('[data-id=date]');
-      const dataArr = new CreateCalendar().splitString(String(date.textContent));
-
-      if (this.holder.style.top !== '-100%') {
-        this.btn = 'back';
-
-        this.toThereChecked = [Number(this.toThereChecked), dataArr[0] - 1, dataArr[1], 'back'];
-        // передаём выбранную дату
+      if (this.toThere.value === '') {
+        this.dateNow = new Date();
+        this.toThere.value = `${this.dateNow.getDate()}.${this.dateNow.getMonth() + 1}.${this.dateNow.getFullYear()}`;
+        this.toThereChecked = [this.dateNow.getDate(), this.dateNow.getMonth(), this.dateNow.getFullYear(), 'back'];
         // eslint-disable-next-line max-len
-        new CreateCalendar().createCalendarPage(dataArr[1], dataArr[0], this.toThereChecked, this.btn);
-      }
+        new CreateCalendar().createCalendarPage(this.dateNow.getFullYear(), this.dateNow.getMonth() + 1, this.toThereChecked, 'back');
+      } else {
+        const date = document.querySelector('[data-id=date]');
+        const dataArr = new CreateCalendar().splitString(String(date.textContent));
 
+        if (this.holder.style.top !== '-100%') {
+          this.btn = 'back';
+
+          this.toThereChecked = [Number(this.toThereChecked), dataArr[0] - 1, dataArr[1], 'back'];
+          // передаём выбранную дату
+          // eslint-disable-next-line max-len
+          new CreateCalendar().createCalendarPage(dataArr[1], dataArr[0], this.toThereChecked, this.btn);
+        }
+      }
       this.holder.style.top = `${this.toBack.offsetTop + this.toBack.offsetHeight}px`;
       this.holder.style.left = `${this.toBack.offsetLeft - ((this.holder.clientWidth - this.toBack.offsetWidth) / 2)}px`;
     });
