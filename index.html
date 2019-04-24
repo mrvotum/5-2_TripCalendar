@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+<link href="main.css" rel="stylesheet"></head>
+<body>
+
+<div data-id="main" class="main">
+  <form class="form" data-form="form" novalidate>
+    <div>
+      <label class="label" for="checkbox">Туда и обратно</label>
+      <input data-id="checkbox" id="checkbox" type="checkbox" class="checkbox"></input>
+    </div>
+    <div class="inputHolder">
+      <div data-id="thereInput" class="formControl to">
+        <label class="label" for="toThere">Туда</label>
+        <input id="toThere" class="input" type="text" data-input="toThere" autocomplete="off" required>
+      </div>
+      <div data-id="backInput" class="formControl back">
+        <label class="label" for="toBack">Обратно</label>
+        <input id="toBack" class="input" type="text" data-input="toBack" autocomplete="off" required>
+      </div>
+  </form>
+</div>
+
+<div class="holder" data-id="holder">
+  <table class="menu" id="menu">
+    <tr><td data-id="back" id="back">‹</td><td colspan="5" data-id="date"></td><td data-id="next" id="next">›</td></tr>
+  </table>
+  <table class="calendar" data-id="calendar"></table>
+</div>
+
+
+
+<!-- <script type="text/javascript" src="./js/moment.js"></script> -->
+<script type="text/javascript" src="main.js"></script></body>
+</html>
