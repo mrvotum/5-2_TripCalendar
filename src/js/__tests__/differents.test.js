@@ -1,4 +1,4 @@
-import Differents from '../src/js/Differents';
+import Differents from '../Differents';
 
 test('Differents creating', () => {
   const inputDifferents = new Differents([17, 4, 2019], [20, 4, 2019]);

@@ -4,8 +4,9 @@
   "description": "5 lesson, 2 task",
   "main": "index.js",
   "scripts": {
-    "test": "jest --passWithNoTests",
+    "test": "jest --testPathPattern='./src/'",
     "build": "webpack --mode production",
+    "e2e": "jest --testPathPattern='./e2e/'",
     "lint": "eslint .",
     "doc": "jsdoc -c jsdoc.conf.json",
     "start": "webpack-dev-server --mode development"

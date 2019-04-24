@@ -1,4 +1,4 @@
-import DatePicker from '../src/js/DatePicker';
+import DatePicker from '../DatePicker';
 
 test('DatePicker creating', () => {
   const inputDatePicker = new DatePicker();

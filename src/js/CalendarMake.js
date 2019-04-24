@@ -70,7 +70,7 @@ export default class CreateCalendar {
 
     // ячейки календаря с датами
     if (back === 'back') {
-      this.createBack(btn, mon, d);
+      this.createBack('back', mon, d);
     } else {
       this.createThere(btn, mon, d);
     }
@@ -93,21 +93,48 @@ export default class CreateCalendar {
   }
 
   createThere(btn, mon, d) {
-    // ячейки календаря с датами
-    while (d.getMonth() === mon) {
-      if (d.getDate() === this.dateNow.getDate() && !btn) { // сегодня
-        this.table += `<td class="today"> ${d.getDate()} </td>`;
-      } else if (d.getDate() < this.dateNow.getDate() && !btn || btn === 'button' && d < this.dateNow) { // недоступно
-        this.table += `<td class="noActive"> ${d.getDate()} </td>`;
-      } else if (d.getDate() > this.dateNow.getDate() && !btn || btn === 'button' && d > this.dateNow) { // когда доступно
-        this.table += `<td class="active">  ${d.getDate()} </td>`;
-      }
-      // btn --- это дата, которую выбрали на календаре для поездки
+    try {
+      this.checkedDay = document.querySelector('[data-input=toThere]');
+      this.checkedDay = this.checkedDay.value.slice(0, -7); // получает выбранное число
+    } catch (error) {
+      // console.error('нет такого');
+    }
 
-      if (this.getDay(d) % 7 === 6) { // вс, последний день - перевод строки
-        this.table += '</tr><tr>';
+    if (this.checkedDay === '') {
+      // ячейки календаря с датами
+      while (d.getMonth() === mon) {
+        if (d.getDate() === this.dateNow.getDate() && !btn) { // сегодня
+          this.table += `<td class="today"> ${d.getDate()} </td>`;
+        } else if (d.getDate() < this.dateNow.getDate() && !btn || btn === 'button' && d < this.dateNow) { // недоступно
+          this.table += `<td class="noActive"> ${d.getDate()} </td>`;
+        } else if (d.getDate() > this.dateNow.getDate() && !btn || btn === 'button' && d > this.dateNow) { // когда доступно
+          this.table += `<td class="active">  ${d.getDate()} </td>`;
+        }
+        // btn --- это дата, которую выбрали на календаре для поездки
+
+        if (this.getDay(d) % 7 === 6) { // вс, последний день - перевод строки
+          this.table += '</tr><tr>';
+        }
+        d.setDate(d.getDate() + 1);
       }
-      d.setDate(d.getDate() + 1);
+    } else {
+      // ячейки календаря с датами
+      while (d.getMonth() === mon) {
+        console.log(this.checkedDay);
+        if (d.getDate() === Number(this.checkedDay) && !btn) { // сегодня
+          this.table += `<td class="today"> ${d.getDate()} </td>`;
+        } else if (d.getDate() < Number(this.checkedDay) && !btn || btn === 'button' && d < this.dateNow) { // недоступно
+          this.table += `<td class="noActive"> ${d.getDate()} </td>`;
+        } else if (d.getDate() > Number(this.checkedDay) && !btn || btn === 'button' && d > this.dateNow) { // когда доступно
+          this.table += `<td class="active">  ${d.getDate()} </td>`;
+        }
+        // btn --- это дата, которую выбрали на календаре для поездки
+
+        if (this.getDay(d) % 7 === 6) { // вс, последний день - перевод строки
+          this.table += '</tr><tr>';
+        }
+        d.setDate(d.getDate() + 1);
+      }
     }
   }
 
